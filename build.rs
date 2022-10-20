@@ -133,10 +133,9 @@ fn main() {
 
     let mut libdirpath: Option<PathBuf> = None;
     if let Ok(libdir) = env::var("LIBPCAP_LIBDIR") {
-        println!("cargo:rustc-link-search=native={}", libdir);
-        libdirpath = Some(PathBuf::from(&libdir));
+        println!("cargo:rustc-link-search={}", libdir);
     }
 
-    let version = get_pcap_lib_version(libdirpath).unwrap();
-    emit_cfg_flags(version);
+    println!("cargo:rustc-link-lib=static=pcap");
+    emit_cfg_flags(Version::new(1, 11, 0));
 }
